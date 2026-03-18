@@ -14,8 +14,12 @@ df = pd.read_sql_query("SELECT * FROM staging.sensor_data", conn)
 print (df.head()) # visar de första raderna av data
 
 # beräknar tex: medelvärde av temperatur, fuktighet och vibration per sensor
+avg_temp = df['temperature'].mean()
+max_vibration = df['vibration'].max() 
 
 
 
-# Spara resultatet i en ny tabell i PostgreSQL
+# spara resultatet i silver tabellen
 
+result.to_sql ("curated.sensor_data_summary", conn, if_exists='replace', index=False)
+print ("batch job klar") 
